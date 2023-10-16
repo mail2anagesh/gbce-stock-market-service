@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
 /**
@@ -36,7 +36,7 @@ public class TradeServiceImpl implements TradeService {
 
         stockService.getStockDetails(tradeRequest.getSymbol());
         Trade trade = new Trade.Builder(tradeRequest.getSymbol(), tradeRequest.getType(), tradeRequest.getTradePrice(),
-                tradeRequest.getSharesQuantity(), new Date()).build();
+                tradeRequest.getSharesQuantity(), Instant.now()).build();
         tradeRepository.createTrade(tradeRequest.getSymbol(), trade);
         log.debug("Trade created Successful");
     }
