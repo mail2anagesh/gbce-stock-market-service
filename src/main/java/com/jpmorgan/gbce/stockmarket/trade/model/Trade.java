@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Trade class
@@ -17,7 +17,7 @@ public class Trade {
     private final TradeType type;
     private final BigDecimal tradedPrice;
     private final Long sharesQuantity;
-    private final Date timestamp;
+    private final Instant timestamp;
 
     private Trade(Builder builder) {
         this.symbol = builder.symbol;
@@ -88,9 +88,9 @@ public class Trade {
         private TradeType type;
         private BigDecimal tradedPrice;
         private Long sharesQuantity;
-        private Date timestamp;
+        private Instant timestamp;
 
-        public Builder(String symbol, TradeType type, BigDecimal tradedPrice, Long sharesQuantity, Date timestamp) {
+        public Builder(String symbol, TradeType type, BigDecimal tradedPrice, Long sharesQuantity, Instant timestamp) {
             this.symbol = symbol;
             this.type = type;
             this.tradedPrice = tradedPrice;
@@ -118,7 +118,7 @@ public class Trade {
             return this;
         }
 
-        public Builder timestamp(final Date timestamp) {
+        public Builder timestamp(final Instant timestamp) {
             this.timestamp = timestamp;
             return this;
         }
