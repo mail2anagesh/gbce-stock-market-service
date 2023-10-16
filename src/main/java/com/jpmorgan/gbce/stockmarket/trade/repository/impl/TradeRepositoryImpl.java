@@ -7,8 +7,9 @@ import com.jpmorgan.gbce.stockmarket.trade.repository.TradeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -62,14 +63,13 @@ public class TradeRepositoryImpl extends BaseRepositoryImpl<String, List<Trade>>
     public List<Trade> tradesInlastMinutes(String key, int minutes) {
 
         List<Trade> tradesInLastMinutes = null;
-        Date date = new Date();
-        long time = date.getTime() - (minutes * 60 * 1000);
+        final Instant lastMinutesTime = Instant.now().minus(minutes, ChronoUnit.MINUTES);
 
         List<Trade> listTrades = retrieveByKey(key);
         if (listTrades != null) {
             tradesInLastMinutes = listTrades
                     .stream()
-                    .filter(trade -> trade.getTimestamp().getTime() >= time)
+                    .filter(trade -> trade.getTimestamp().isAfter(lastMinutesTime))
                     .collect(Collectors.toList());
         }
         return tradesInLastMinutes;
